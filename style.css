@@ -1,6 +1,7 @@
 body {
     font-family: Arial;
     font-size: 120%;
+    background-image: url("2806 matrix.jpg");
   }
 
 #intro {
@@ -15,6 +16,7 @@ h1 {
 p {
     color: rgb(58, 58, 58);
     font-weight: lighter;
+    font-family: 'Nanum Gothic Coding', monospace;
 }
   a {
     color: #353535;
@@ -23,7 +25,7 @@ p {
   }
   
   a:hover {
-    color: #f5c5cb;
+    color: #f5b8a0;
     border-color: #35c6da;
   }
   
@@ -32,7 +34,7 @@ p {
     margin: 5px;
     cursor: pointer;
     font-size: 100%;
-    background-color: #35c6da;
+    background-color: #1aac27;
     border-radius: 5px;
     padding: 2px 10px;
     color: white;
@@ -41,8 +43,11 @@ p {
   }
   
   button:hover {
-    background-color: #f5c5cb;
-    border-color: #35c6da;
+    background-color: #ffffff;
+    color: rgb(41, 40, 40);
+    border-color: #1aac27;
+    border-width: 3px;
+    border-style: solid;
   }
   
   .choices button {
@@ -55,7 +60,7 @@ p {
   
   ol {
     padding-left: 0px;
-    max-height: 400px;
+    max-height: 500px;
     overflow: auto;
   }
   
@@ -70,11 +75,12 @@ p {
   
   .wrapper {
     margin: 100px auto 0 auto;
-    padding: 10px;
+    padding: 15px;
     max-width: 600px;
     border-color: rgb(121, 120, 120);
     border-style: solid;
     border-width: 1px;
+    background-color: #fff;
   }
   
   .hide {
@@ -104,4 +110,5 @@ p {
     position: absolute;
     top: 10px;
     right: 10px;
+    background-color: #ffff;
   }
