@@ -17,7 +17,9 @@ var answerD = document.getElementById("#D");
 
 
 var timeElapsed = 0;
+var totalSeconds = 0;
 var currentQuestion = 0;
+var quizTimer;
 
 // Set questions, choices and answers
 
@@ -65,8 +67,8 @@ function init() {
     finishDiv.style.display = "none";
 }
 function startQuiz() {
-    startEl.style.display = "none";
-    startEl.setAttribute("class", "hide");
+    // startEl.style.display = "none";
+    // startEl.setAttribute("class", "hide");
 
     // un-hide questions section
     questionsEl.removeAttribute("class");
