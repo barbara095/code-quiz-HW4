@@ -3,10 +3,11 @@
 var timerEl = document.querySelector("#time");
 var startEl = document.querySelector("start");
 var startBtn = document.querySelector("#start");
+var titleEl = document.querySelector("#question-title")
 var questionsEl = document.querySelector("#questions");
 var choicesEl = document.querySelector("#choices");
 var answerBtn = document.querySelectorAll("btn-primary");
-var scoresEl = document.querySelector("#")
+var scoresEl = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
 
 var answerA = document.getElementById("#A");
@@ -61,10 +62,10 @@ var questionsArray = [
 
 // hiding resultsDiv and highScoresDiv on page load
 function init() {
-    finishDiv = style.display("none");
+    finishDiv.style.display = "none";
 }
 function startQuiz() {
-    startEl = style.display("none");
+    startEl.style.display = "none";
     startEl.setAttribute("class", "hide");
 
     // un-hide questions section
@@ -81,10 +82,10 @@ function renderQuestion() {
     var questionDisplay = questionsArray[currentQuestion];
   
     questionDisplay.innerHTML = "<p>" + questionDisplay.question + "</p>";
-    answerAButton.innerHTML = q.choiceA;
-    answerBButton.innerHTML = q.choiceB;
-    answerCButton.innerHTML = q.choiceC;
-    answerDButton.innerHTML = q.choiceD;
+    answerA.innerHTML = questionDisplay.choices[0];
+    answerB.innerHTML = questionDisplay.choices[1];
+    answerC.innerHTML = questionDisplay.choices[2];
+    answerD.innerHTML = questionDisplay.choices[3];
   }
 
 function setTimer() {
@@ -124,7 +125,7 @@ function checkAnswer(answer) {
 
 function getQuestion() {
     // get current question object from array
-    var currentQuestion = questions[questionIndex];
+    var currentQuestion = questionsArray[questionIndex];
 
     // update title with current question
     var titleEl = document.getElementById("question-title");
@@ -250,13 +251,13 @@ function checkForEnter(event) {
     }
 }
 
-// user clicks button to submit initials
-submitBtn.onclick = saveHighscore;
+// // user clicks button to submit initials
+// submitBtn.onclick = saveHighscore;
 
 // user clicks button to start quiz
 startBtn.onclick = startQuiz;
 
-initialsEl.onkeyup = checkForEnter;
+// initialsEl.onkeyup = checkForEnter;
 
 //   Event listeners
 startBtn.addEventListener("click", startQuiz);
