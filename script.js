@@ -109,7 +109,7 @@ function startQuiz() {
 }
 
 function getQuestion() {
-    // Set a variable that allows us to display each question, which are pulled through from the questionsArray
+    // Set a variable that allows us to display each question, which is pulled from the questionsArray
     var questionDisplay = questionsArray[currentQuestion];
     // Display question in question title section
     qTitleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
@@ -131,21 +131,29 @@ function validateAnswer(choice) {
         secondsElapsed -= 8;
     }
         currentQuestion++;
-        getQuestion();
-    
+        renderQuestion();
+        // else ends the quiz and shows the resultsDiv
+        stopTimer();
+       
 }
+
+// Sets the totalSeconds
+function setTimer() {
+    // Clears the quizTimer
+    clearInterval(quizTimer);
+    totalSeconds = 60;
+  }
 
 function setTimer() {
     setTime();
 
     // We only want to start the timer if the time = 0
     if (timerEl === 0) {
-        /* The "interval" variable here using "setInterval()" begins the recurring increment of the
-           secondsElapsed variable which is used to check if the time is up */
+        
         interval = setInterval(function () {
             timeElapsed++;
 
-            // So renderTime() is called here once every second.
+            // Call renderTime for every second elapsed.
             renderTime();
         }, 1000);
     }
@@ -154,7 +162,7 @@ function setTimer() {
 
 function questionClick() {
     // check if user guessed wrong
-    if (this.value !== questions[questionIndex].answer) {
+    if (this.value !== questions[currentQuestion].answer) {
         // penalize time
         time -= 15;
 
@@ -165,14 +173,9 @@ function questionClick() {
         // display new time on page
         timerEl.textContent = time;
 
-        // play "wrong" sound effect
-        sfxWrong.play();
-
         feedbackEl.textContent = "Wrong!";
     } else {
-        // play "right" sound effect
-        sfxRight.play();
-
+    
         feedbackEl.textContent = "Correct!";
     }
 
