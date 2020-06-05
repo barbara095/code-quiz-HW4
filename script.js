@@ -159,8 +159,6 @@ function questionClick(choice) {
 }
 
   function renderTime() {
-    secondsLeft = totalSeconds - secondsElapsed;
-    timerEl.textContent = secondsLeft;
     // If secondsElapsed equals totalSeconds, the quizTimer stops
     if (secondsElapsed >= totalSeconds) {
       stopTimer();
