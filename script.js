@@ -1,7 +1,8 @@
 // Setting variables to DOM elements
 
 var timerEl = document.querySelector("#time");
-var startEl = document.querySelector("start");
+var introDiv = document.querySelector("#intro");
+var startEl = document.querySelector("#start-screen");
 var startBtn = document.querySelector("#start");
 var titleEl = document.querySelector("#question-title")
 var questionsEl = document.querySelector("#questions");
@@ -10,85 +11,115 @@ var answerBtn = document.querySelectorAll("btn-primary");
 var scoresEl = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
 
-var answerA = document.getElementById("#A");
-var answerB = document.getElementById("#B");
-var answerC = document.getElementById("#C");
-var answerD = document.getElementById("#D");
+var answerA = document.querySelector("#A");
+var answerB = document.querySelector("#B");
+var answerC = document.querySelector("#C");
+var answerD = document.querySelector("#D");
 
 
 var timeElapsed = 0;
 var totalSeconds = 0;
 var currentQuestion = 0;
 var quizTimer;
+var interval;
 
 // Set questions, choices and answers
 
 var questionsArray = [
     {
         question: "Which javascript object allows us to ask a user a closed question? i.e: they can only answer 'yes' or 'no', 'true' or 'false.' ",
-        choices: ["strings", "booleans", "alerts", "numbers"],
-        answer: "booleans"
+        choiceA: "strings",
+        choiceB: "booleans", 
+        choiceC: "alerts", 
+        choiceD: "numbers",
+        answer: "booleans",
     },
     {
         question: "What is the main advantage of using jQuery over standard javascript?",
-        choices: ["gives you wings", "simplifies DOM manipulation and event handling thus reducing the amount of lines needed to code", "allows you to debug elements quicker", "enables you to set and retrieve items from local storage"],
-        answer: "simplifies DOM manipulation and event handling, thus reducing the amount of lines needed to code"
+        choiceA: "gives you wings", 
+        choiceB: "simplifies DOM manipulation and event handling, thus reducing the amount of lines needed to code",
+        choiceC: "allows you to debug elements quicker", 
+        choiceD: "enables you to set and retrieve items from local storage",
+        answer: "simplifies DOM manipulation and event handling, thus reducing the amount of lines needed to code",
     },
     {
         question: "What is the difference between Math.ceil() and Math.floor()?",
-        choices: ["Math.ceil() rounds a number up to the next largest integer, while Math.floor() returns the largest integer less than or equal to any given number", "Math.ceil() console logs a list from the highest to the lowest value, while Math.floor() console logs a list from lowest to highest"],
-        answer: "Math.ceil() rounds a number up to the next largest integer, while Math.floor() returns the largest integer less than or equal to any given number"
+        choiceA: "Math.ceil() rounds a number up to the next largest integer, while Math.floor() returns the largest integer less than or equal to any given number", 
+        choiceB: "Math.ceil() console logs a list starting from the highest to the lowest value, while Math.floor() console logs a list from lowest to highest",
+        choiceC: "All of these",
+        choiceD: "None of these",
+        answer: "Math.ceil() rounds a number up to the next largest integer, while Math.floor() returns the largest integer less than or equal to any given number",
     },
     {
         question: "True or false: A child function can access objects from its grandchild function",
-        choices: ["True", "False"],
+        choiceA: "True", 
+        choiceB: "False",
         answer: "False"
     },
     {
         question: "In Javascript, what does a 'do, while' statement execute?",
-        choices: ["executes a function until that function is true", "creates a loop that executes a statement until the condition outputs as 'false", "nothing, just sits there in the background as a distraction", "goes through an array until the last element of the array is shown"],
-        answer: "creates a loop that executes a statement until the condition outputs as 'false' ",
+        choiceA: "executes a function until that function is true", 
+        choiceB: "creates a loop that executes a statement until the condition outputs as 'false", 
+        choiceC: "nothing, just sits there in the background as a distraction", 
+        choiceD: "goes through an array until the last element of the array is shown",
+        answer: "creates a loop that executes a statement until the condition outputs as 'false'",
     },
     {
         question: "How many columns does Bootstrap's grid system typically have?",
-        choices: ["6", "8", "10", "12"],
+        choiceA: "6", 
+        choiceB: "8", 
+        choiceC: "10", 
+        choiceD: "12",
         answer: "12",
     },
 
     {
         question: "Finish this sentence: children elements are only HTML elements, while a child element is______",
-        choices: ["nothing", "only limited to ", "nothing, just sits there in the background as a distraction", "goes through an array until the last element of the array is shown"],
-        answer: "creates a loop that executes a statement until the condition outputs as 'false' ",
+        choiceA: "nothing", 
+        choiceB: "only limited to its parent", 
+        choiceC: "nothing, just sits there in the background as a distraction", 
+        choiceD: "everything",
+        answer: "everything",
     }
 ];
 
-// hiding resultsDiv and highScoresDiv on page load
+init();
+
+// hides finishDiv and introDiv upon quiz commencement
 function init() {
     finishDiv.style.display = "none";
+    introDiv.style.display = "none";
 }
 function startQuiz() {
-    // startEl.style.display = "none";
-    // startEl.setAttribute("class", "hide");
 
     // un-hide questions section
     questionsEl.removeAttribute("class");
+
+    // hide start button
+    startEl.style.display = "none";
 
     // start timer
     timerEl = setInterval(clockTick, 1000);
 
     // show starting time
     timerEl.textContent = timeElapsed;
+
+    getQuestion();
+    setTimer();
 }
 
-function renderQuestion() {
+function getQuestion() {
+    // Set a variable that allows us to display each question, which are pulled through form the questionsArray
     var questionDisplay = questionsArray[currentQuestion];
-  
-    questionDisplay.innerHTML = "<p>" + questionDisplay.question + "</p>";
-    answerA.innerHTML = questionDisplay.choices[0];
-    answerB.innerHTML = questionDisplay.choices[1];
-    answerC.innerHTML = questionDisplay.choices[2];
-    answerD.innerHTML = questionDisplay.choices[3];
+
+    titleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
+    answerA.innerHTML = questionDisplay.choiceA;
+    answerB.innerHTML = questionDisplay.choiceB;
+    answerC.innerHTML = questionDisplay.choiceC;
+    answerD.innerHTML = questionDisplay.choiceD;
+
   }
+
 
 function setTimer() {
     setTime();
@@ -123,34 +154,6 @@ function checkAnswer(answer) {
         // end the quiz and show the resultsDiv
         stopTimer();
     }
-}
-
-function getQuestion() {
-    // get current question object from array
-    var currentQuestion = questionsArray[questionIndex];
-
-    // update title with current question
-    var titleEl = document.getElementById("question-title");
-    titleEl.textContent = currentQuestion.title;
-
-    // clear out any old question choices
-    choicesEl.innerHTML = "";
-
-    // loop over choices
-    currentQuestion.choices.forEach(function (choice, i) {
-        // create new button for each choice
-        var choiceNode = document.createElement("button");
-        choiceNode.setAttribute("class", "choice");
-        choiceNode.setAttribute("value", choice);
-
-        choiceNode.textContent = i + 1 + ". " + choice;
-
-        // attach click event listener to each choice
-        choiceNode.onclick = questionClick;
-
-        // display on the page
-        choicesEl.appendChild(choiceNode);
-    });
 }
 
 function questionClick() {
@@ -258,6 +261,8 @@ function checkForEnter(event) {
 
 // user clicks button to start quiz
 startBtn.onclick = startQuiz;
+
+
 
 // initialsEl.onkeyup = checkForEnter;
 
