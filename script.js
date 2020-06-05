@@ -8,7 +8,7 @@ var qTitleEl = document.querySelector("#question-title")
 var questionsEl = document.querySelector("#questions");
 var choicesEl = document.querySelector("#choices");
 var answerBtn = document.querySelectorAll("btn-primary");
-var scoresEl = document.querySelector("#final-score")
+var finalScore = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
 
 var choiceA = document.querySelector("#A");
@@ -17,11 +17,11 @@ var choiceC = document.querySelector("#C");
 var choiceD = document.querySelector("#D");
 
 var currentQuestion = 0;
-var timeElapsed = 0;
+var secondsElapsed = 0;
 var totalSeconds = 0;
 var quizTimer;
 var interval;
-var score;
+var score = 0;
 
 // Set questions, choices and answers
 
@@ -102,10 +102,9 @@ function startQuiz() {
 
     // show starting time
     timerEl.textContent = totalSeconds;
-    
+
     getQuestion();
     setTimer();
-    renderTime();
 }
 
 function getQuestion() {
@@ -123,7 +122,7 @@ function getQuestion() {
 
 function questionClick(choice) {
     // check if user guessed wrong
-    if (choice == questionArray[currentQuestion].answer) {
+    if (this.value === questionArray[currentQuestion].answer) {
         alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
@@ -131,47 +130,43 @@ function questionClick(choice) {
         alert("Sorry, that is incorrect I'm afraid...");
         // Otherwise decrement time by 8 seconds
         secondsElapsed -= 8;
-    
-    for (var i = 0; i < questionsArray.length; i++) {
-        if (currentQuestion < questionsArray[i]) {
-            currentQuestion++;
-            getQuestion();
+    }
+    if (currentQuestion < questionsArray.length) {
+        currentQuestion++;
+        getQuestion();
 
-          } else {
-            // else ends the quiz and shows the resultsDiv
-            stopTimer();
-          }
+    } else {
+        // else ends the quiz and shows the resultsDiv
+        stopTimer();
+
     }
-        
-    }
-    
+
 }
 
-  function setTimer(){
-    var timerInterval = setInterval(function(){
-         totalSeconds--;
-         timerEl.innerHTML="" + totalSeconds;
+// Sets the quiz timer 
+function setTimer() {
+    var timerInterval = setInterval(function () {
+        // Decrements the timer by 1 second
+        totalSeconds--;
+        // Embed the timer count in the timer within HTML
+        timerEl.innerHTML = "" + totalSeconds;
 
+        // Clear interval once we reach 0
         if (totalSeconds < 0) {
             clearInterval(timerInterval);
+            // Reset back to 60 seconds
+            totalSeconds = 60;
         }
     }, 1000);
 }
 
-  function renderTime() {
-    // If secondsElapsed equals totalSeconds, the quizTimer stops
-    if (secondsElapsed >= totalSeconds) {
-      stopTimer();
-    }
-  }
-
 function clockTick() {
     // update time
-    time--;
-    timerEl.textContent = time;
+    quizTimer--;
+    timerEl.textContent = quizTimer;
 
     // check if user ran out of time
-    if (time <= 0) {
+    if (quizTimer <= 0) {
         quizEnd();
     }
 }
@@ -206,8 +201,8 @@ function quizEnd() {
     clearInterval(timerEl);
 
     // show end screen
-    
-   finishDiv.removeAttribute("class");
+
+    finishDiv.removeAttribute("class");
 
     // show final score
     var finalScoreEl = document.getElementById("final-score");
