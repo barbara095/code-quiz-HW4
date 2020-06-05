@@ -109,5 +109,8 @@ p {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #ffff;
+    margin-right: 10px;
+    background-color: rgb(247, 78, 115);
+    padding: 10px;
+    font-weight: 500;
   }

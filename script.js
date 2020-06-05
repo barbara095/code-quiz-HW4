@@ -4,17 +4,17 @@ var timerEl = document.querySelector("#time");
 var introDiv = document.querySelector("#intro");
 var startEl = document.querySelector("#start-screen");
 var startBtn = document.querySelector("#start");
-var titleEl = document.querySelector("#question-title")
+var qTitleEl = document.querySelector("#question-title")
 var questionsEl = document.querySelector("#questions");
 var choicesEl = document.querySelector("#choices");
 var answerBtn = document.querySelectorAll("btn-primary");
 var scoresEl = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
 
-var answerA = document.querySelector("#A");
-var answerB = document.querySelector("#B");
-var answerC = document.querySelector("#C");
-var answerD = document.querySelector("#D");
+var choiceA = document.querySelector("#A");
+var choiceB = document.querySelector("#B");
+var choiceC = document.querySelector("#C");
+var choiceD = document.querySelector("#D");
 
 
 var timeElapsed = 0;
@@ -22,6 +22,7 @@ var totalSeconds = 0;
 var currentQuestion = 0;
 var quizTimer;
 var interval;
+var score;
 
 // Set questions, choices and answers
 
@@ -85,10 +86,9 @@ var questionsArray = [
 
 init();
 
-// hides finishDiv and introDiv upon quiz commencement
+// hides finishDiv upon quiz commencement
 function init() {
     finishDiv.style.display = "none";
-    introDiv.style.display = "none";
 }
 function startQuiz() {
 
@@ -105,21 +105,35 @@ function startQuiz() {
     timerEl.textContent = timeElapsed;
 
     getQuestion();
-    setTimer();
+    // setTimer();
 }
 
 function getQuestion() {
-    // Set a variable that allows us to display each question, which are pulled through form the questionsArray
+    // Set a variable that allows us to display each question, which are pulled through from the questionsArray
     var questionDisplay = questionsArray[currentQuestion];
+    // Display question in question title section
+    qTitleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
 
-    titleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
-    answerA.innerHTML = questionDisplay.choiceA;
-    answerB.innerHTML = questionDisplay.choiceB;
-    answerC.innerHTML = questionDisplay.choiceC;
-    answerD.innerHTML = questionDisplay.choiceD;
+    choiceA.innerHTML = questionDisplay.choiceA;
+    choiceB.innerHTML = questionDisplay.choiceB;
+    choiceC.innerHTML = questionDisplay.choiceC;
+    choiceD.innerHTML = questionDisplay.choiceD;
 
-  }
+    // Create a loop that goes through each question
+}
 
+function validateAnswer(choice) {
+    if (choice === questionsArray[currentQuestion].answer) {
+        // If choice selected is correct, increment score by 6 points
+        score += 6;
+    } else {
+        // Otherwise decrement time by 8 seconds
+        secondsElapsed -= 8;
+    }
+        currentQuestion++;
+        getQuestion();
+    
+}
 
 function setTimer() {
     setTime();
@@ -137,24 +151,6 @@ function setTimer() {
     }
 }
 
-//   Check answers
-function checkAnswer(answer) {
-    if (answer == questionsArray[question]) {
-        // answer is correct, log 5 points to quizScore
-        quizScore += 5;
-    } else {
-        // else if answer is incorrect, deduct 10 seconds from quizTimer
-        timeElapsed -= 10;
-    }
-    // increases currentQuestion if less than lastQuestion and renders a new question
-    if (currentQuestion < lastQuestion) {
-        currentQuestion++;
-        renderQuestion();
-    } else {
-        // end the quiz and show the resultsDiv
-        stopTimer();
-    }
-}
 
 function questionClick() {
     // check if user guessed wrong
@@ -187,7 +183,7 @@ function questionClick() {
     }, 1000);
 
     // move to next question
-    currentQuestionIndex++;
+    currentQuestion++;
 
     // check if we've run out of questions
     if (currentQuestionIndex === questions.length) {
@@ -258,10 +254,6 @@ function checkForEnter(event) {
 
 // // user clicks button to submit initials
 // submitBtn.onclick = saveHighscore;
-
-// user clicks button to start quiz
-startBtn.onclick = startQuiz;
-
 
 
 // initialsEl.onkeyup = checkForEnter;
