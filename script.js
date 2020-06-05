@@ -16,10 +16,9 @@ var choiceB = document.querySelector("#B");
 var choiceC = document.querySelector("#C");
 var choiceD = document.querySelector("#D");
 
-
+var currentQuestion = 0;
 var timeElapsed = 0;
 var totalSeconds = 0;
-var currentQuestion = 0;
 var quizTimer;
 var interval;
 var score;
@@ -103,10 +102,10 @@ function startQuiz() {
 
     // show starting time
     timerEl.textContent = totalSeconds;
-
+    
     getQuestion();
-
-    renderCounter();
+    setTimer();
+    renderTime();
 }
 
 function getQuestion() {
@@ -122,73 +121,51 @@ function getQuestion() {
 
 }
 
-function renderCounter() {
-    // Clears the quizTimer & sets the totalSeconds
-    setTime();
-  
-    // Increases secondsElapsed by 1 second which gets subtracted from the totalSeconds set in setTime()
-    quizTimer = setInterval(function () {
-      secondsElapsed++;
-  
-      renderTime();
-    }, 1000);
-  }
-
-function setTime() {
-    var timerInterval = setInterval(function () {
-        secondsElapsed++;
-        totalSeconds = 60;
-        timerEl.textContent = totalSeconds;
-
-        if (secondsLeft === 0) {
-            clearInterval(timerInterval);
-        }
-
-    }, 1000);
-}
-
-
-function questionClick() {
+function questionClick(choice) {
     // check if user guessed wrong
-    if (this.value == questionArray[currentQuestion].answer) {
-        alert("Correct!")
+    if (choice == questionArray[currentQuestion].answer) {
+        alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
     } else {
-        alert("Sorry, that is incorrect I'm afraid...")
+        alert("Sorry, that is incorrect I'm afraid...");
         // Otherwise decrement time by 8 seconds
         secondsElapsed -= 8;
+    
+    for (var i = 0; i < questionsArray.length; i++) {
+        if (currentQuestion < questionsArray[i]) {
+            currentQuestion++;
+            getQuestion();
 
-        // display new time on page
-        timerEl.textContent = time;
-
+          } else {
+            // else ends the quiz and shows the resultsDiv
+            stopTimer();
+          }
     }
-    // move to next question
-    currentQuestion++;
-
-    // check if we've run out of questions
-    if (currentQuestion === questions.length) {
-        quizEnd();
-    } else {
-        getQuestion();
+        
     }
+    
 }
 
-function quizEnd() {
-    // stop timer
-    clearInterval(timerId);
+  function setTimer(){
+    var timerInterval = setInterval(function(){
+         totalSeconds--;
+         timerEl.innerHTML="" + totalSeconds;
 
-    // show end screen
-    var endScreenEl = document.getElementById("end-screen");
-    endScreenEl.removeAttribute("class");
-
-    // show final score
-    var finalScoreEl = document.getElementById("final-score");
-    finalScoreEl.textContent = time;
-
-    // hide questions section
-    questionsEl.setAttribute("class", "hide");
+        if (totalSeconds < 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
 }
+
+  function renderTime() {
+    secondsLeft = totalSeconds - secondsElapsed;
+    timerEl.textContent = secondsLeft;
+    // If secondsElapsed equals totalSeconds, the quizTimer stops
+    if (secondsElapsed >= totalSeconds) {
+      stopTimer();
+    }
+  }
 
 function clockTick() {
     // update time
@@ -226,18 +203,28 @@ function saveHighscore() {
     }
 }
 
+function quizEnd() {
+    // stop timer
+    clearInterval(timerEl);
+
+    // show end screen
+    
+   finishDiv.removeAttribute("class");
+
+    // show final score
+    var finalScoreEl = document.getElementById("final-score");
+    finalScoreEl.textContent = time;
+
+    // hide questions section
+    questionsEl.setAttribute("class", "hide");
+}
+
 function checkForEnter(event) {
     // "13" represents the enter key
     if (event.key === "Enter") {
         saveHighscore();
     }
 }
-
-// // user clicks button to submit initials
-// submitBtn.onclick = saveHighscore;
-
-
-// initialsEl.onkeyup = checkForEnter;
 
 //   Event listeners
 startBtn.addEventListener("click", startQuiz);
