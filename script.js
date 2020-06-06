@@ -10,6 +10,7 @@ var choicesEl = document.querySelector("#choices");
 var answerBtn = document.querySelectorAll("btn-primary");
 var finalScore = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
+var submitBtn = document.querySelector("#submit");
 
 var choiceA = document.querySelector("#A");
 var choiceB = document.querySelector("#B");
@@ -178,8 +179,7 @@ function saveHighscore() {
     // make sure value wasn't empty
     if (initials !== "") {
         // get saved scores from localstorage, or if not any, set to empty array
-        var highscores =
-            JSON.parse(window.localStorage.getItem("highscores")) || [];
+        var highscores = JSON.parse(window.localStorage.getItem("highscores")) || [];
 
         // format new score object for current user
         var newScore = {
@@ -221,3 +221,5 @@ function checkForEnter(event) {
 
 //   Event listeners
 startBtn.addEventListener("click", startQuiz);
+submitBtn.addEventListener("click", quizEnd);
+
