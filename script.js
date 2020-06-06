@@ -107,16 +107,18 @@ function startQuiz() {
     timerEl.textContent = totalSeconds;
 
     getQuestion();
-    setTimer();
+    clockTick();
 }
 
 function getQuestion() {
     // Set a variable that allows us to display each question, which is pulled from the questionsArray
     var questionDisplay = questionsArray[currentQuestion];
-    // Display question in question title section
+    // Loop each set of objects in the array
     for (var i = 0; i < questionsArray.length; i++) {
+        // Display question in question title section
         qTitleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
 
+        // Append choices from array to html text
         choiceA.innerHTML = questionDisplay.choiceA;
         choiceB.innerHTML = questionDisplay.choiceB;
         choiceC.innerHTML = questionDisplay.choiceC;
@@ -136,42 +138,45 @@ function questionClick() {
         secondsElapsed += 8;
     }
 
-//    var choiceNode = document.getElementById("button");
-  
-//    if (choiceNode.checked == true) {
-//     questionDisplay++;
-//     getQuestion();
-//    } 
-if (currentQuestion < lastQuestion) {
-    currentQuestion++;
-    renderQuestion();
-  } else {
+    // If the index of the question displayed is less than the questionArray length, show the next question
+    if (indexof(currentQuestion) < (questionsArray.length)) {
+        currentQuestion++;
+        getQuestion();
+
+    } else {
         // else ends the quiz and shows the resultsDiv
         stopTimer();
-
     }
-
 }
 
 // Sets the quiz timer 
 function setTimer() {
-    var timerInterval = setInterval(function () {
-        // Decrements the timer by 1 second
-        totalSeconds--;
-        // Embed the timer count in the timer within HTML
-        timerEl.innerHTML = "" + totalSeconds;
 
-        // Clear interval once we reach 0
-        if (totalSeconds < 0) {
-            clearInterval(timerInterval);
-            // Reset back to 60 seconds
-            totalSeconds = 60;
-        }
+    //  Set time interval
+    var timeInterval = setInterval(function() {
+      timerEl--;
+
+      // Clear interval once we reach 0
+      if (timerEl === 0) {
+        timerEl.textContent = "" + totalSeconds;
+        clearInterval(timeInterval);
+        // Reset back to 60 seconds
+        totalSeconds = 60;
+      }
+  
     }, 1000);
-}
+  }
+
+  // Sets the totalSeconds
+function setTime() {
+    // Clears the quizTimer
+    clearInterval(quizTimer);
+    totalSeconds = 60;
+  }
 
 function clockTick() {
-    // update time
+    setTimer();
+    // Increase seconds elapsed by 1
     quizTimer--;
     timerEl.textContent = quizTimer;
 
@@ -180,6 +185,7 @@ function clockTick() {
         quizEnd();
     }
 }
+
 
 function saveHighscore() {
     // get value of input box
