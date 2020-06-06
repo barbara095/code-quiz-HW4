@@ -170,7 +170,7 @@ function setTimer() {
   // Sets the totalSeconds
 function setTime() {
     // Clears the quizTimer
-    clearInterval(quizTimer);
+    clearInterval(timeInterval);
     totalSeconds = 60;
   }
 
@@ -213,7 +213,7 @@ function saveHighscore() {
 
 function quizEnd() {
     // stop timer
-    clearInterval(timerEl);
+    clearInterval(timeInterval);
 
     // show end screen
 
