@@ -84,6 +84,8 @@ var questionsArray = [
     }
 ];
 
+var lastQuestion = questionsArray.length - 1;
+
 init();
 
 // hides finishDiv upon quiz commencement
@@ -112,31 +114,38 @@ function getQuestion() {
     // Set a variable that allows us to display each question, which is pulled from the questionsArray
     var questionDisplay = questionsArray[currentQuestion];
     // Display question in question title section
-    qTitleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
+    for (var i = 0; i < questionsArray.length; i++) {
+        qTitleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
 
-    choiceA.innerHTML = questionDisplay.choiceA;
-    choiceB.innerHTML = questionDisplay.choiceB;
-    choiceC.innerHTML = questionDisplay.choiceC;
-    choiceD.innerHTML = questionDisplay.choiceD;
-
+        choiceA.innerHTML = questionDisplay.choiceA;
+        choiceB.innerHTML = questionDisplay.choiceB;
+        choiceC.innerHTML = questionDisplay.choiceC;
+        choiceD.innerHTML = questionDisplay.choiceD;
+    }
 }
 
-function questionClick(choice) {
+function questionClick() {
     // check if user guessed wrong
-    if (this.value === questionArray[currentQuestion].answer) {
+    if (choice === questionsArray[currentQuestion].answer) {
         alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
     } else {
         alert("Sorry, that is incorrect I'm afraid...");
         // Otherwise decrement time by 8 seconds
-        secondsElapsed -= 8;
+        secondsElapsed += 8;
     }
-    if (currentQuestion < questionsArray.length) {
-        currentQuestion++;
-        getQuestion();
 
-    } else {
+//    var choiceNode = document.getElementById("button");
+  
+//    if (choiceNode.checked == true) {
+//     questionDisplay++;
+//     getQuestion();
+//    } 
+if (currentQuestion < lastQuestion) {
+    currentQuestion++;
+    renderQuestion();
+  } else {
         // else ends the quiz and shows the resultsDiv
         stopTimer();
 
@@ -221,5 +230,6 @@ function checkForEnter(event) {
 
 //   Event listeners
 startBtn.addEventListener("click", startQuiz);
+choicesEl.addEventListener("click", getQuestion);
 submitBtn.addEventListener("click", quizEnd);
 
