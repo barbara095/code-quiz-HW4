@@ -126,9 +126,9 @@ function getQuestion() {
     }
 }
 
-function questionClick() {
+function checkAnswer(answer) {
     // check if user guessed wrong
-    if (choice === questionsArray[currentQuestion].answer) {
+    if (answer === questionsArray[currentQuestion].answer) {
         alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
@@ -139,7 +139,7 @@ function questionClick() {
     }
 
     // If the index of the question displayed is less than the questionArray length, show the next question
-    if (indexof(currentQuestion) < (questionsArray.length)) {
+    if ((currentQuestion) < (questionsArray.length)) {
         currentQuestion++;
         getQuestion();
 
@@ -213,7 +213,7 @@ function saveHighscore() {
 
 function quizEnd() {
     // stop timer
-    clearInterval(timeInterval);
+    clearInterval(quizTimer);
 
     // show end screen
 
