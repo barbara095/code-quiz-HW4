@@ -11,6 +11,7 @@ var answerBtn = document.querySelectorAll("btn-primary");
 var finalScore = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
 var submitBtn = document.querySelector("#submit");
+var initialsEl = document.getElementById("initials");
 
 var choiceA = document.querySelector("#A");
 var choiceB = document.querySelector("#B");
@@ -175,7 +176,7 @@ function setTime() {
   }
 
 function clockTick() {
-    setTimer();
+    setTime();
     // Increase seconds elapsed by 1
     quizTimer--;
     timerEl.textContent = quizTimer;
