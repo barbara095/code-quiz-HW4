@@ -126,9 +126,9 @@ function getQuestion() {
     }
 }
 
-function checkAnswer(answer) {
+function checkAnswer(choice) {
     // check if user guessed wrong
-    if (answer === questionsArray[currentQuestion].answer) {
+    if (choice == questionsArray[currentQuestion].answer) {
         alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
