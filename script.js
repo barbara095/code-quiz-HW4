@@ -126,7 +126,7 @@ function getQuestion() {
     }
 }
 
-function checkAnswer(choice) {
+function checkChoice(choice) {
     // check if user guessed wrong
     if (choice == questionsArray[currentQuestion].answer) {
         alert("Correct!");
