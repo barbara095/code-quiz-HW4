@@ -156,17 +156,17 @@ function setTimer() {
     //  Set time interval
     var timeInterval = setInterval(function() {
       timerEl--;
-
+      setTime();
       // Clear interval once we reach 0
       if (timerEl === 0) {
         timerEl.textContent = "" + totalSeconds;
         clearInterval(timeInterval);
         // Reset back to 60 seconds
         totalSeconds = 60;
-      }
+     }
   
     }, 1000);
-  }
+}
 
   // Sets the totalSeconds
 function setTime() {
@@ -176,7 +176,6 @@ function setTime() {
   }
 
 function clockTick() {
-    setTime();
     // Increase seconds elapsed by 1
     quizTimer--;
     timerEl.textContent = quizTimer;
