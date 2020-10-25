@@ -12,6 +12,7 @@ var finalScore = document.querySelector("#final-score")
 var finishDiv = document.querySelector("#finish");
 var submitBtn = document.querySelector("#submit");
 var initialsEl = document.getElementById("initials");
+var currentScore = document.querySelector("#current-score")
 
 var choiceA = document.querySelector("#A");
 var choiceB = document.querySelector("#B");
@@ -20,8 +21,8 @@ var choiceD = document.querySelector("#D");
 
 var currentQuestion = 0;
 var secondsElapsed = 0;
-var totalSeconds = 0;
-var quizTimer;
+var totalSeconds = 50;
+var quizTimer = 0;
 var interval;
 var score = 0;
 
@@ -102,10 +103,10 @@ function startQuiz() {
     startEl.style.display = "none";
 
     // start timer
-    timerEl = setInterval(clockTick, 1000);
+    // timerEl = setInterval(clockTick, 1000);
 
     // show starting time
-    timerEl.textContent = totalSeconds;
+    timerEl.value = totalSeconds;
 
     getQuestion();
     clockTick();
@@ -148,6 +149,10 @@ function checkChoice(choice) {
         // else ends the quiz and shows the resultsDiv
         stopTimer();
     }
+
+    // setting new score on screen after every choice is selected
+    currentScore.textContent = score 
+
 }
 
 // Sets the quiz timer 
@@ -177,7 +182,10 @@ function setTime() {
 
 function clockTick() {
     // Increase seconds elapsed by 1
-    quizTimer--;
+    // while () {
+    //     setTimeout(quizTimer++ )
+    // }
+    quizTimer++;
     timerEl.textContent = quizTimer;
 
     // check if user ran out of time
