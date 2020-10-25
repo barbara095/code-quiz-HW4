@@ -34,7 +34,7 @@ var questionsArray = [
         choiceB: "booleans",
         choiceC: "alerts",
         choiceD: "numbers",
-        answer: "booleans",
+        answer: "B",
     },
     {
         question: "What is the main advantage of using jQuery over standard javascript?",
@@ -42,7 +42,7 @@ var questionsArray = [
         choiceB: "simplifies DOM manipulation and event handling, thus reducing the amount of lines needed to code",
         choiceC: "allows you to debug elements quicker",
         choiceD: "enables you to set and retrieve items from local storage",
-        answer: "simplifies DOM manipulation and event handling, thus reducing the amount of lines needed to code",
+        answer: "B",
     },
     {
         question: "What is the difference between Math.ceil() and Math.floor()?",
@@ -50,13 +50,13 @@ var questionsArray = [
         choiceB: "Math.ceil() console logs a list starting from the highest to the lowest value, while Math.floor() console logs a list from lowest to highest",
         choiceC: "All of these",
         choiceD: "None of these",
-        answer: "Math.ceil() rounds a number up to the next largest integer, while Math.floor() returns the largest integer less than or equal to any given number",
+        answer: "A",
     },
     {
         question: "True or false: A child function can access objects from its grandchild function",
         choiceA: "True",
         choiceB: "False",
-        answer: "False"
+        answer: "B"
     },
     {
         question: "In Javascript, what does a 'do, while' statement execute?",
@@ -64,7 +64,7 @@ var questionsArray = [
         choiceB: "creates a loop that executes a statement until the condition outputs as 'false",
         choiceC: "nothing, just sits there in the background as a distraction",
         choiceD: "goes through an array until the last element of the array is shown",
-        answer: "creates a loop that executes a statement until the condition outputs as 'false'",
+        answer: "B",
     },
     {
         question: "How many columns does Bootstrap's grid system typically have?",
@@ -72,7 +72,7 @@ var questionsArray = [
         choiceB: "8",
         choiceC: "10",
         choiceD: "12",
-        answer: "12",
+        answer: "D",
     },
 
     {
@@ -81,7 +81,7 @@ var questionsArray = [
         choiceB: "only limited to its parent",
         choiceC: "nothing, just sits there in the background as a distraction",
         choiceD: "everything",
-        answer: "everything",
+        answer: "D",
     }
 ];
 
