@@ -21,15 +21,17 @@ var choiceD = document.querySelector("#D");
 
 var currentQuestion = 0;
 var secondsElapsed = 0;
-var totalSeconds = 50;
-var quizTimer = 0;
+var totalSeconds = 20;
+// var quizTimer = 0;
 var interval;
 var score = 0;
+var quizInProgress = true;
 
 // Set questions, choices and answers
 
 var questionsArray = [
     {
+        number: 1,
         question: "Which javascript object allows us to ask a user a closed question? i.e: they can only answer 'yes' or 'no', 'true' or 'false.' ",
         choiceA: "strings",
         choiceB: "booleans",
@@ -38,6 +40,7 @@ var questionsArray = [
         answer: "B",
     },
     {
+        number: 2,
         question: "What is the main advantage of using jQuery over standard javascript?",
         choiceA: "gives you wings",
         choiceB: "simplifies DOM manipulation and event handling, thus reducing the amount of lines needed to code",
@@ -46,6 +49,7 @@ var questionsArray = [
         answer: "B",
     },
     {
+        number: 3,
         question: "What is the difference between Math.ceil() and Math.floor()?",
         choiceA: "Math.ceil() rounds a number up to the next largest integer, while Math.floor() returns the largest integer less than or equal to any given number",
         choiceB: "Math.ceil() console logs a list starting from the highest to the lowest value, while Math.floor() console logs a list from lowest to highest",
@@ -54,12 +58,14 @@ var questionsArray = [
         answer: "A",
     },
     {
+        number: 4,
         question: "True or false: A child function can access objects from its grandchild function",
         choiceA: "True",
         choiceB: "False",
         answer: "B"
     },
     {
+        number: 5, 
         question: "In Javascript, what does a 'do, while' statement execute?",
         choiceA: "executes a function until that function is true",
         choiceB: "creates a loop that executes a statement until the condition outputs as 'false",
@@ -68,6 +74,7 @@ var questionsArray = [
         answer: "B",
     },
     {
+        number: 6,
         question: "How many columns does Bootstrap's grid system typically have?",
         choiceA: "6",
         choiceB: "8",
@@ -75,14 +82,14 @@ var questionsArray = [
         choiceD: "12",
         answer: "D",
     },
-
     {
+        number: 7,
         question: "Finish this sentence: children elements are only HTML elements, while a child element is______",
         choiceA: "nothing",
         choiceB: "only limited to its parent",
         choiceC: "nothing, just sits there in the background as a distraction",
         choiceD: "everything",
-        answer: "D",
+        answer: "B",
     }
 ];
 
@@ -120,11 +127,16 @@ function getQuestion() {
         // Display question in question title section
         qTitleEl.innerHTML = "<p>" + questionDisplay.question + "</p>";
 
-        // Append choices from array to html text
-        choiceA.innerHTML = questionDisplay.choiceA;
-        choiceB.innerHTML = questionDisplay.choiceB;
-        choiceC.innerHTML = questionDisplay.choiceC;
-        choiceD.innerHTML = questionDisplay.choiceD;
+        if (questionsArray[currentQuestion].number == 4) {
+            choiceA.innerHTML = questionDisplay.choiceA;
+            choiceB.innerHTML = questionDisplay.choiceB;
+        } else {
+             // Append choices from array to html text
+            choiceA.innerHTML = questionDisplay.choiceA;
+            choiceB.innerHTML = questionDisplay.choiceB;
+            choiceC.innerHTML = questionDisplay.choiceC;
+            choiceD.innerHTML = questionDisplay.choiceD;
+        }
     }
 }
 
@@ -134,10 +146,12 @@ function checkChoice(choice) {
         alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
+        totalSeconds = 20;
     } else {
         alert("Sorry, that is incorrect I'm afraid...");
         // Otherwise decrement time by 8 seconds
-        secondsElapsed += 8;
+        secondsElapsed -= 8;
+        totalSeconds = 20;
     }
 
     // If the index of the question displayed is less than the questionArray length, show the next question
@@ -160,10 +174,10 @@ function setTimer() {
 
     //  Set time interval
     var timeInterval = setInterval(function() {
-      timerEl--;
-      setTime();
+        totalSeconds--;
+        setTime();
       // Clear interval once we reach 0
-      if (timerEl === 0) {
+      if (totalSeconds === 0) {
         timerEl.textContent = "" + totalSeconds;
         clearInterval(timeInterval);
         // Reset back to 60 seconds
@@ -177,23 +191,33 @@ function setTimer() {
 function setTime() {
     // Clears the quizTimer
     clearInterval(timeInterval);
-    totalSeconds = 60;
-  }
+    totalSeconds = 20;
+}
 
 function clockTick() {
     // Increase seconds elapsed by 1
-    // while () {
-    //     setTimeout(quizTimer++ )
-    // }
-    quizTimer++;
-    timerEl.textContent = quizTimer;
+    var clockDecrement = setInterval(() => {
+        totalSeconds--
+        timerEl.textContent = totalSeconds;
+        // check if user ran out of time 
+        if (totalSeconds == 0) {
+            // stop timer
+            clearInterval(clockDecrement);
 
-    // check if user ran out of time
-    if (quizTimer <= 0) {
-        quizEnd();
-    }
+            // show end screen
+
+            finishDiv.removeAttribute("class");
+
+            // show final score
+            var finalScoreEl = document.getElementById("final-score");
+            finalScoreEl.textContent = time;
+
+            // hide questions section
+            questionsEl.setAttribute("class", "hide");
+        }
+    }, 1000)
+
 }
-
 
 function saveHighscore() {
     // get value of input box
@@ -221,7 +245,7 @@ function saveHighscore() {
 
 function quizEnd() {
     // stop timer
-    clearInterval(quizTimer);
+    clearInterval(clockDecrement);
 
     // show end screen
 
