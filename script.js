@@ -254,7 +254,9 @@ function saveHighscore() {
 
 function quizEnd() {
 
-    saveHighscore()
+    // I wasn't sure how to save the scores with the existing code you have in local storage, hope I helped until now.. :) 
+    // I think you'd want to invoke a function here to save scores though.
+    
     // show end screen
     finishDiv.removeAttribute("class");
 
