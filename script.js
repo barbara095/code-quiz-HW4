@@ -23,6 +23,7 @@ var currentQuestion = 0;
 var secondsElapsed = 0;
 var totalSeconds = 20;
 // var quizTimer = 0;
+var totalTimeTaken = 0;
 var interval;
 var score = 0;
 var quizInProgress = true;
@@ -143,11 +144,15 @@ function getQuestion() {
 function checkChoice(choice) {
     // check if user guessed wrong
     if (choice == questionsArray[currentQuestion].answer) {
+        // this line just adds the time taken to total time taken for final calcuclation on score screen
+        totalTimeTaken += 20 - totalSeconds;
         alert("Correct!");
         // If choice selected is correct, increment score by 6 points
         score += 6;
         totalSeconds = 20;
     } else {
+        // this line just adds the time taken to total time taken for final calcuclation on score screen
+        totalTimeTaken += 20 - totalSeconds;
         alert("Sorry, that is incorrect I'm afraid...");
         // Otherwise decrement time by 8 seconds
         secondsElapsed -= 8;
@@ -195,6 +200,7 @@ function setTime() {
 }
 
 function clockTick() {
+    timerEl.textContent = totalSeconds;
     // Increase seconds elapsed by 1
     var clockDecrement = setInterval(() => {
         totalSeconds--
@@ -205,12 +211,14 @@ function clockTick() {
             clearInterval(clockDecrement);
 
             // show end screen
-
-            finishDiv.removeAttribute("class");
+            finishDiv.style.display = "block";
 
             // show final score
             var finalScoreEl = document.getElementById("final-score");
-            finalScoreEl.textContent = time;
+            finalScoreEl.textContent = score;
+
+            var timeTakenEl = document.getElementById("time-taken");
+            timeTakenEl.textContent = totalTimeTaken;
 
             // hide questions section
             questionsEl.setAttribute("class", "hide");
