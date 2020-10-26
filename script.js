@@ -207,6 +207,7 @@ function clockTick() {
         timerEl.textContent = totalSeconds;
         // check if user ran out of time 
         if (totalSeconds == 0) {
+            totalTimeTaken += 20 - totalSeconds;
             // stop timer
             clearInterval(clockDecrement);
 
@@ -252,11 +253,9 @@ function saveHighscore() {
 }
 
 function quizEnd() {
-    // stop timer
-    clearInterval(clockDecrement);
 
+    saveHighscore()
     // show end screen
-
     finishDiv.removeAttribute("class");
 
     // show final score
