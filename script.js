@@ -66,7 +66,7 @@ var questionsArray = [
         answer: "B"
     },
     {
-        number: 5, 
+        number: 5,
         question: "In Javascript, what does a 'do, while' statement execute?",
         choiceA: "executes a function until that function is true",
         choiceB: "creates a loop that executes a statement until the condition outputs as 'false",
@@ -132,7 +132,7 @@ function getQuestion() {
             choiceA.innerHTML = questionDisplay.choiceA;
             choiceB.innerHTML = questionDisplay.choiceB;
         } else {
-             // Append choices from array to html text
+            // Append choices from array to html text
             choiceA.innerHTML = questionDisplay.choiceA;
             choiceB.innerHTML = questionDisplay.choiceB;
             choiceC.innerHTML = questionDisplay.choiceC;
@@ -170,7 +170,7 @@ function checkChoice(choice) {
     }
 
     // setting new score on screen after every choice is selected
-    currentScore.textContent = score 
+    currentScore.textContent = score
 
 }
 
@@ -178,21 +178,21 @@ function checkChoice(choice) {
 function setTimer() {
 
     //  Set time interval
-    var timeInterval = setInterval(function() {
+    var timeInterval = setInterval(function () {
         totalSeconds--;
         setTime();
-      // Clear interval once we reach 0
-      if (totalSeconds === 0) {
-        timerEl.textContent = "" + totalSeconds;
-        clearInterval(timeInterval);
-        // Reset back to 60 seconds
-        totalSeconds = 60;
-     }
-  
+        // Clear interval once we reach 0
+        if (totalSeconds === 0) {
+            timerEl.textContent = "" + totalSeconds;
+            clearInterval(timeInterval);
+            // Reset back to 60 seconds
+            totalSeconds = 60;
+        }
+
     }, 1000);
 }
 
-  // Sets the totalSeconds
+// Sets the totalSeconds
 function setTime() {
     // Clears the quizTimer
     clearInterval(timeInterval);
@@ -215,8 +215,8 @@ function clockTick() {
             finishDiv.style.display = "block";
 
             // show final score
-            var finalScoreEl = document.getElementById("final-score");
-            finalScoreEl.textContent = score;
+            finalScore = document.getElementById("final-score");
+            finalScore.textContent = score;
 
             var timeTakenEl = document.getElementById("time-taken");
             timeTakenEl.textContent = totalTimeTaken;
@@ -242,28 +242,21 @@ function saveHighscore() {
             score: time,
             initials: initials
         };
-
         // save to localstorage
         highscores.push(newScore);
         window.localStorage.setItem("highscores", JSON.stringify(highscores));
-
         // redirect to next page
         window.location.href = "highscores.html";
     }
 }
 
 function quizEnd() {
-
     // I wasn't sure how to save the scores with the existing code you have in local storage, hope I helped until now.. :) 
     // I think you'd want to invoke a function here to save scores though.
-    
     // show end screen
     finishDiv.removeAttribute("class");
-
     // show final score
-    var finalScoreEl = document.getElementById("final-score");
-    finalScoreEl.textContent = time;
-
+    finalScore.textContent = time;
     // hide questions section
     questionsEl.setAttribute("class", "hide");
 }
