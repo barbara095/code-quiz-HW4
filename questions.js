@@ -57,5 +57,14 @@ var questions = [
         choiceC: "Using ReactJS",
         choiceD: "By using Internet Explorer",
         answer: "B",
+    },
+    {
+        number: 8,
+        question: "What is the correct syntax for creating an async function?",
+        choiceA: "function helloworld() {} asnyc",
+        choiceB: "function helloworld async() {}",
+        choiceC: "async function helloworld() {}",
+        choiceD: "function async helloworld() {}",
+        answer: "C",
     }
 ]
